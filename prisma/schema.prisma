@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                @id @default(autoincrement())
+  name              String             @unique
+  createdAt         DateTime           @default(now())
+  attempts          Attempt[]
+  flashCardAttempts FlashCardAttempt[]
+}
+
+model Exercise {
+  id            Int       @id @default(autoincrement())
+  statement     String
+  correctAnswer Float
+  tolerance     Float     @default(0.5)
+  category      String
+  difficulty    String
+  formulaUsed   String
+  solutionSteps String
+  createdAt     DateTime  @default(now())
+  attempts      Attempt[]
+}
+
+model Guide {
+  id              Int     @id @default(autoincrement())
+  category        String  @unique
+  title           String
+  definition      String
+  whenToUse       String
+  formula         String
+  examTip         String
+  exampleProblem  String?
+  exampleSolution String?
+}
+
+model FlashCard {
+  id       Int                @id @default(autoincrement())
+  question String
+  answer   String
+  category String?
+  attempts FlashCardAttempt[]
+}
+
+model Attempt {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  exerciseId    Int
+  userAnswer    Float
+  userProcedure String
+  isCorrect     Boolean
+  aiFeedback    String?
+  attemptedAt   DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id])
+  exercise      Exercise @relation(fields: [exerciseId], references: [id])
+}
+
+model FlashCardAttempt {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  flashCardId Int
+  confidence  String
+  attemptedAt DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+  flashCard   FlashCard @relation(fields: [flashCardId], references: [id])
+}

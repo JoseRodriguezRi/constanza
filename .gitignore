@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+client/node_modules/
+
+# Variables de entorno — NUNCA subir al repo
+.env
+
+# Build del frontend
+client/dist/
+
+# Base de datos SQLite
+prisma/*.db
+prisma/*.db-journal
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
