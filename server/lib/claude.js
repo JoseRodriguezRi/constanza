@@ -6,14 +6,21 @@ const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-4-5';
 const FEEDBACK_SYSTEM = `Eres un tutor experto en matemática financiera universitaria.
 Un estudiante resolvió un ejercicio y necesitas evaluar su trabajo.
 Responde SIEMPRE en español. Sé preciso, claro y motivador.
+
+REGLA IMPORTANTE DE TOLERANCIA: Una respuesta es correcta si está dentro del 2% de diferencia relativa con la respuesta exacta. Si la diferencia es menor al 2%, isCorrect debe ser true aunque no sea exactamente igual, ya que la diferencia se debe al redondeo de decimales intermedios.
+
 Responde SOLO en JSON con este formato exacto (sin markdown, sin texto extra):
 {
   "isCorrect": boolean,
   "errorStep": "descripción del paso donde se equivocó, o null si es correcto",
   "correctApproach": "explicación breve del procedimiento correcto",
   "encouragement": "mensaje corto motivador (máx 1 oración)",
-  "formulaReminder": "fórmula clave que debía usar"
-}`;
+  "formulaReminder": "fórmula clave que debía usar",
+  "roundingNote": null
+}
+
+Si isCorrect es true Y la respuesta del estudiante NO es exactamente igual a la respuesta correcta (hay una pequeña diferencia numérica), establece roundingNote en: "Tu resultado es correcto. La pequeña diferencia se debe al redondeo de decimales intermedios."
+En cualquier otro caso roundingNote debe ser null.`;
 
 const GENERATE_SYSTEM = `Eres un profesor experto en matemática financiera universitaria.
 Genera ejercicios originales, bien planteados, con situaciones del mundo real.
@@ -21,7 +28,7 @@ Responde SOLO en JSON con este formato exacto (sin markdown, sin texto extra):
 {
   "statement": "enunciado completo del ejercicio",
   "correctAnswer": número,
-  "tolerance": 0.5,
+  "tolerance": 2,
   "solutionSteps": ["paso 1", "paso 2", "paso 3", "paso 4"],
   "formulaUsed": "fórmula principal usada",
   "category": "categoría",

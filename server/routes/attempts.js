@@ -30,12 +30,14 @@ router.post('/', async (req, res, next) => {
       aiFeedback = JSON.stringify(feedback);
     } catch (claudeErr) {
       console.error('Claude API error:', claudeErr.message);
+      const diff = Math.abs(answerNum - correct) / Math.abs(correct);
       feedback = {
         isCorrect: quickCheck,
         errorStep: quickCheck ? null : 'No se pudo analizar el procedimiento en detalle.',
         correctApproach: `La respuesta correcta es ${correct}. Revisa los pasos de la solución.`,
         encouragement: quickCheck ? '¡Buen trabajo!' : '¡Sigue intentando!',
         formulaReminder: exercise.formulaUsed,
+        roundingNote: (quickCheck && diff > 0) ? 'Tu resultado es correcto. La pequeña diferencia se debe al redondeo de decimales intermedios.' : null,
       };
       aiFeedback = JSON.stringify(feedback);
     }

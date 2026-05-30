@@ -40,6 +40,12 @@ export default function FeedbackBanner({ isCorrect, feedback, exercise, collapse
             </div>
           )}
 
+          {feedback.roundingNote && (
+            <div className="bg-yellow-900/20 rounded-lg p-3 border border-yellow-700/30">
+              <p className="text-yellow-300 text-sm">{feedback.roundingNote}</p>
+            </div>
+          )}
+
           <div>
             <p className="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">
               Procedimiento correcto

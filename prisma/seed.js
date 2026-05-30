@@ -19,7 +19,7 @@ async function main() {
       statement:
         'Una persona debe $10,000 a pagar en 3 meses y $20,000 en 6 meses. Acuerda liquidar ambas deudas con un solo pago en el mes 5. Si la tasa es del 2% cuatrimestral, ¿cuánto pagará?',
       correctAnswer: 30427.05,
-      tolerance: 0.5,
+      tolerance: 2,
       category: 'EQUIVALENCIA',
       difficulty: 'INTERMEDIATE',
       formulaUsed: 'Ecuación de equivalencia con fecha focal en mes 5',
@@ -34,7 +34,7 @@ async function main() {
       statement:
         'Se deben $15,000 a pagar en 12 meses. Se acuerda pagar en tres cuotas iguales en los meses 3, 6 y 9 con un interés del 15% anual compuesto capitalizable trimestralmente.',
       correctAnswer: 5580.17,
-      tolerance: 0.5,
+      tolerance: 2,
       category: 'EQUIVALENCIA',
       difficulty: 'ADVANCED',
       formulaUsed: 'Ecuación de equivalencia + conversión de tasa',
@@ -50,7 +50,7 @@ async function main() {
       statement:
         'Una empresa deposita $12,000 al final de cada mes en un fondo de inversión que paga una tasa nominal anual del 15% capitalizable mensualmente. Determine el monto acumulado al cabo de 4 años.',
       correctAnswer: 783020.12,
-      tolerance: 0.5,
+      tolerance: 2,
       category: 'FUTURE_VALUE',
       difficulty: 'BASIC',
       formulaUsed: 'M = R[(1+i)^n - 1] / i',
@@ -66,7 +66,7 @@ async function main() {
       statement:
         'Una persona desea recibir $25,000 al final de cada trimestre durante 6 años. Si la tasa de interés es del 10% capitalizable trimestralmente, determine cuánto dinero necesita invertir hoy.',
       correctAnswer: 439267.15,
-      tolerance: 0.5,
+      tolerance: 2,
       category: 'PRESENT_VALUE',
       difficulty: 'BASIC',
       formulaUsed: 'VP = R[1-(1+i)^-n] / i',
@@ -82,7 +82,7 @@ async function main() {
       statement:
         'Una compañía necesita acumular $850,000 dentro de 5 años. El banco ofrece una tasa nominal anual del 8% capitalizable mensualmente. Determine el depósito mensual que debe hacer al final de cada mes.',
       correctAnswer: 11492.02,
-      tolerance: 0.5,
+      tolerance: 2,
       category: 'PAYMENT',
       difficulty: 'INTERMEDIATE',
       formulaUsed: 'R = M × i / [(1+i)^n - 1]',
@@ -98,7 +98,7 @@ async function main() {
       statement:
         'Un profesionista deposita $7,500 al final de cada mes en una cuenta que genera un interés del 1.2% mensual. Determine cuántos meses necesitará para acumular $500,000.',
       correctAnswer: 46,
-      tolerance: 1,
+      tolerance: 2,
       category: 'PERIODS',
       difficulty: 'INTERMEDIATE',
       formulaUsed: 'n = log(M×i/R + 1) / log(1+i)',
@@ -115,7 +115,7 @@ async function main() {
       statement:
         'Una universidad adquiere equipo de laboratorio mediante pagos semestrales de $180,000 durante 7 años. La tasa de interés es del 14% nominal anual capitalizable semestralmente. Determine el valor presente de la deuda.',
       correctAnswer: 1628435.21,
-      tolerance: 0.5,
+      tolerance: 2,
       category: 'PRESENT_VALUE',
       difficulty: 'INTERMEDIATE',
       formulaUsed: 'VP = R[1-(1+i)^-n] / i',
@@ -143,9 +143,9 @@ async function main() {
         'Técnica para comparar o consolidar deudas que vencen en fechas distintas, moviéndolas a un momento común llamado fecha focal.',
       whenToUse:
         'Cuando tienes varias deudas con distintas fechas de vencimiento y quieres consolidarlas en un solo pago, o cambiar el plan de pagos original.',
-      formula: 'C_{\\text{focal}} = C \\cdot (1+i)^n \\quad (\\text{adelantar}) \\qquad C_{\\text{focal}} = \\dfrac{C}{(1+i)^n} \\quad (\\text{retrasar})',
+      formula: 'C_{\\text{focal}} = C \\cdot (1+i)^n \\; (\\text{adelantar}) \\qquad C_{\\text{focal}} = \\dfrac{C}{(1+i)^n} \\; (\\text{retrasar}) \\\\[8pt] \\text{Conversión de tasas:} \\quad i_{\\text{periodo}} = \\dfrac{J_m}{m} \\; (\\text{capitalizable}) \\qquad J_m = m \\cdot \\left[(1+i)^{1/m} - 1\\right] \\; (\\text{efectiva a nominal})',
       examTip:
-        "Palabras clave: 'pago único', 'liquidar en el mes X', 'consolidar deudas'. Siempre identifica la fecha focal primero antes de mover cualquier valor.",
+        "Palabras clave: 'pago único', 'liquidar en el mes X', 'consolidar deudas'. Siempre identifica la fecha focal primero. Si la tasa dice 'capitalizable m veces', usa i_periodo = J_m / m. Si te dan tasa efectiva y necesitas la del periodo, usa J_m = m × [(1+i)^(1/m) − 1].",
       exampleProblem:
         'Debes $5,000 hoy y $8,000 en 4 meses. ¿Cuánto pagas en el mes 3 con tasa del 3% mensual?',
       exampleSolution:
@@ -168,34 +168,34 @@ async function main() {
     },
     {
       category: 'PRESENT_VALUE',
-      title: 'Valor Presente de una Anualidad Ordinaria',
+      title: 'Capital (C) — Valor Presente de una Anualidad Ordinaria',
       definition:
-        'Valor actual de una serie de pagos futuros iguales, descontados a una tasa de interés dada. Representa cuánto vale hoy esa corriente de pagos.',
+        'Valor actual de una serie de rentas (R) futuras iguales, descontadas a una tasa de interés i. Representa cuánto capital (C) vale hoy esa corriente de pagos.',
       whenToUse:
         'Préstamos, valor de una deuda hoy, cuánto invertir hoy para recibir pagos futuros, valoración de proyectos.',
-      formula: 'VP = R \\cdot \\dfrac{1 - (1+i)^{-n}}{i}',
+      formula: 'C = R \\cdot \\dfrac{1 - (1+i)^{-n}}{i}',
       examTip:
-        "Palabras clave: 'cuánto invertir hoy', 'valor actual', 'valor presente de la deuda'. Si te dan el VP y piden R, despeja: R = VP × i / [1-(1+i)⁻ⁿ]",
+        "Palabras clave: 'cuánto invertir hoy', 'valor actual', 'valor presente de la deuda'. Si te dan C y piden R, despeja: R = C / {[1-(1+i)⁻ⁿ] / i}",
       exampleProblem:
         'Recibirás $3,000 mensuales durante 24 meses. Tasa 1.5% mensual. ¿Cuánto vale hoy esa renta?',
       exampleSolution:
-        'VP = 3,000 × [1-(1.015)⁻²⁴] / 0.015 = 3,000 × 20.0304 = $60,091.24',
+        'C = 3,000 × [1-(1.015)⁻²⁴] / 0.015 = 3,000 × 20.0304 = $60,091.24',
     },
     {
       category: 'PAYMENT',
-      title: 'Cálculo de la Cuota o Depósito Periódico (R)',
+      title: 'Renta (R) — Cuota o Depósito Periódico',
       definition:
-        'Determinar el pago periódico necesario para alcanzar un monto futuro (ahorro) o saldar una deuda presente (préstamo).',
+        'Determinar la renta periódica (R) necesaria para alcanzar un monto futuro M (ahorro) o saldar un capital presente C (préstamo).',
       whenToUse:
-        'Cuando conoces la meta financiera (VP o VF), la tasa y el número de periodos, y necesitas encontrar cuánto pagar o depositar cada periodo.',
+        'Cuando conoces la meta financiera (C o M), la tasa i y el número de periodos n, y necesitas encontrar cuánto pagar o depositar cada periodo.',
       formula:
-        'R = M \\cdot \\dfrac{i}{(1+i)^n - 1} \\quad (\\text{si conoces VF}) \\qquad R = VP \\cdot \\dfrac{i}{1-(1+i)^{-n}} \\quad (\\text{si conoces VP})',
+        'R = \\dfrac{M}{\\dfrac{(1+i)^n - 1}{i}} \\quad (\\text{si conoces M}) \\qquad R = \\dfrac{C}{\\dfrac{1-(1+i)^{-n}}{i}} \\quad (\\text{si conoces C})',
       examTip:
-        "Palabras clave: 'cuánto debe depositar', 'cuota mensual', 'pago periódico', 'abono'. Identifica primero si el dato conocido es VP o VF para elegir la fórmula correcta.",
+        "Palabras clave: 'cuánto debe depositar', 'cuota mensual', 'pago periódico', 'abono'. Identifica primero si el dato conocido es C (capital/VP) o M (monto/VF) para elegir la fórmula correcta.",
       exampleProblem:
         'Quieres acumular $100,000 en 12 meses con tasa del 1% mensual. ¿Cuánto depositas mensualmente?',
       exampleSolution:
-        'R = 100,000 × 0.01 / [(1.01)¹² - 1] = 1,000 / 0.12683 = $7,884.88',
+        'R = 100,000 / {[(1.01)¹² - 1] / 0.01} = 100,000 / 12.6825 = $7,884.88',
     },
     {
       category: 'PERIODS',
@@ -225,12 +225,12 @@ async function main() {
     {
       question: '¿Cuál es la diferencia entre tasa nominal y tasa efectiva?',
       answer:
-        'La tasa nominal (j) es la anunciada sin considerar la capitalización. La tasa efectiva considera el efecto del interés compuesto en el periodo. Conversión: i_ef = (1 + j/m)^m − 1',
+        'La tasa nominal (J_m) es la anunciada con m capitalizaciones al año. La tasa efectiva del periodo se obtiene: i_periodo = J_m / m. Para convertir tasa efectiva anual a nominal: J_m = m × [(1+i)^(1/m) − 1], donde i es la tasa efectiva anual y m la frecuencia de capitalización.',
     },
     {
       question: "¿Qué significa que una tasa es 'capitalizable mensualmente'?",
       answer:
-        'Que los intereses se calculan y suman al capital 12 veces al año. Para obtener la tasa mensual: i_mensual = tasa_nominal_anual / 12',
+        'Que los intereses se calculan y suman al capital 12 veces al año (m = 12). Para obtener la tasa del periodo: i_periodo = J_m / m. Ejemplo: 12% capitalizable mensualmente → i_mensual = 12% / 12 = 1% mensual.',
     },
     {
       question: '¿Cuál es la diferencia entre anualidad ordinaria y anticipada?',
@@ -246,7 +246,7 @@ async function main() {
       question:
         'Si la tasa es anual pero los pagos son mensuales, ¿qué haces primero?',
       answer:
-        'Convertir la tasa al periodo de pago ANTES de cualquier cálculo: i_mensual = (1 + i_anual)^(1/12) − 1 si es efectiva, o i_mensual = tasa_nominal_anual / 12 si es capitalizable mensualmente.',
+        'Convertir la tasa al periodo de pago ANTES de cualquier cálculo. Si dice "capitalizable mensualmente": i_periodo = J_m / m (ejemplo: 12% cap. mensual → 12%/12 = 1%). Si es tasa efectiva anual: usa J_m = m × [(1+i)^(1/m) − 1] con m = 12 para obtener la tasa nominal mensual, luego i_mensual = J_m / 12.',
     },
     {
       question: '¿Cuándo usas Valor Futuro vs Valor Presente?',
@@ -277,7 +277,7 @@ async function main() {
     {
       question: '¿Qué es la Tasa Efectiva Anual (TEA)?',
       answer:
-        'La tasa real que ganas o pagas en un año considerando la capitalización. TEA = (1 + i_periodo)^m − 1, donde m es el número de capitalizaciones al año. Es la tasa de comparación universal.',
+        'La tasa real que ganas o pagas en un año considerando la capitalización. TEA = (1 + i_periodo)^m − 1, donde i_periodo = J_m / m y m es la frecuencia de capitalización. Es la tasa de comparación universal. Para ir de TEA a tasa nominal: J_m = m × [(1+TEA)^(1/m) − 1].',
     },
     {
       question:
@@ -293,7 +293,7 @@ async function main() {
     {
       question: '¿Cómo se convierte una tasa trimestral a mensual?',
       answer:
-        'Con la fórmula de conversión de periodos: i_mensual = (1 + i_trimestral)^(1/3) − 1. Nunca dividas la tasa trimestral entre 3 directamente, a menos que sea una tasa nominal.',
+        'Si la tasa trimestral es efectiva: usa J_m = m × [(1+i)^(1/m) − 1] con m = 3 para obtener la tasa nominal trimestral, luego i_mensual = J_m / 3. En la práctica: i_mensual = (1 + i_trimestral)^(1/3) − 1. Si la tasa trimestral ES nominal: i_mensual = J_m / 3 directamente.',
     },
   ];
 
